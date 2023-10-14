@@ -1,0 +1,27 @@
+local players = game:GetService("Players")
+local tycoon = workspace.Tycoon 
+local whoIsSpawn = tycoon.Dropper2
+local button = script.Parent
+local priceText = script.Parent.Price.PriceGui.PriceText
+local price = script.Parent.Price.PriceGui.PriceValue
+
+priceText.Text = "Buy dropper $"..price.Value
+
+button.Touched:Connect(function(hit)
+	print("Tpucher")
+	local plr = players:GetPlayerFromCharacter(hit.Parent)
+	if not plr then return end
+	if tycoon.Owner.Value == plr then
+		if plr.leaderstats.Money.Value >= price.Value then
+			print("asd")
+
+			for _, child in ipairs(whoIsSpawn:GetChildren()) do
+				if child:IsA("Part")  then
+					child.Transparency = 0
+					whoIsSpawn.DropperPart.DropperScript.Enabled = true
+					button:Destroy()
+				end
+			end
+		end
+	end
+end)
